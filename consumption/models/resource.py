@@ -7,7 +7,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # app imports
-from consumption.models import Subject
+from consumption.models.subject import Subject
 
 
 class Resource(models.Model):
