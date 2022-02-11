@@ -6,7 +6,7 @@
 from django.urls import path
 
 # app imports
-from consumption.views.resource import ResourceCreateView
+from consumption.views.resource import ResourceCreateView, ResourceDetailView
 from consumption.views.subject import (
     SubjectCreateView,
     SubjectDeleteView,
@@ -22,6 +22,7 @@ See :djangodoc:`URL namespaces <topics/http/urls/#url-namespaces>`.
 """
 
 urlpatterns = [
+    # Subject-related URLs
     path("subject/create/", SubjectCreateView.as_view(), name="subject-create"),
     path("<int:subject_id>/", SubjectDetailView.as_view(), name="subject-detail"),
     path("subject/list/", SubjectListView.as_view(), name="subject-list"),
@@ -35,5 +36,11 @@ urlpatterns = [
         SubjectDeleteView.as_view(),
         name="subject-delete",
     ),
+    # Resource-related URLs
     path("resource/create/", ResourceCreateView.as_view(), name="resource-create"),
+    path(
+        "resource/<int:resource_id>/",
+        ResourceDetailView.as_view(),
+        name="resource-detail",
+    ),
 ]
