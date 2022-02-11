@@ -8,6 +8,7 @@ from django.urls import path
 # app imports
 from consumption.views.resource import (
     ResourceCreateView,
+    ResourceDeleteView,
     ResourceDetailView,
     ResourceUpdateView,
 )
@@ -51,5 +52,10 @@ urlpatterns = [
         "resource/<int:resource_id>/update/",
         ResourceUpdateView.as_view(),
         name="resource-update",
+    ),
+    path(
+        "resource/<int:resource_id>/delete/",
+        ResourceDeleteView.as_view(),
+        name="resource-delete",
     ),
 ]
