@@ -3,6 +3,7 @@
 """Provide the app's main class that actually represent a consumer."""
 
 # Django imports
+from django import forms
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -24,3 +25,18 @@ class Subject(models.Model):
 
     def __str__(self):  # noqa: D105
         return "{} ({})".format(self.name, self.id)  # pragma: nocover
+
+
+class SubjectForm(forms.ModelForm):
+    """Get and validate input for creating and updating ``Subject`` instances."""
+
+    template_name = "consumption/forms/generic.html"
+    """This template will be used to render the form.
+
+    This uses Django's form rendering, as introduced in v4.0, see
+    :djangoapi:`Outputting forms as HTML <forms/api/#ref-forms-api-outputting-html>`.
+    """
+
+    class Meta:  # noqa: D106
+        model = Subject
+        fields = "__all__"
