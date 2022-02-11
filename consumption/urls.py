@@ -8,6 +8,7 @@ from django.urls import path
 # app imports
 from consumption.views.subject import (
     SubjectCreateView,
+    SubjectDeleteView,
     SubjectDetailView,
     SubjectListView,
     SubjectUpdateView,
@@ -27,5 +28,10 @@ urlpatterns = [
         "subject/<int:subject_id>/update/",
         SubjectUpdateView.as_view(),
         name="subject-update",
+    ),
+    path(
+        "subject/<int:subject_id>/delete/",
+        SubjectDeleteView.as_view(),
+        name="subject-delete",
     ),
 ]
