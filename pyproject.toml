@@ -169,7 +169,7 @@ setenv =
   DJANGO_SUPERUSER_PASSWORD=foobar
 skip_install = {[testenv:django]skip_install}
 commands =
-  django-admin createsuperuser --noinput --settings=dev_env.settings --pythonpath=./
+  django-admin createsuperuser --noinput --settings=tests.util.settings_dev --pythonpath=./
 
 [testenv:installation]
 basepython = {[testenv:util]basepython}

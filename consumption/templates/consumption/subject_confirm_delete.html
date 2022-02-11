@@ -1,0 +1,14 @@
+{% extends "consumption/app_base.html" %}
+
+{% block page-title %}Subject: Delete {{ subject_instance.name }}{% endblock page-title %}
+
+{% block main %}
+<h2>Delete {{ subject_instance.name }}</h2>
+
+<form method="post" novalidate class="consumption-form">
+  {% csrf_token %}
+
+  <p>Are you sure you want to delete this Subject?</p>
+  <button type="submit" class="danger">Yes, I want to delete this Subject!</button>
+</form>
+{% endblock main %}

@@ -36,7 +36,7 @@ DATABASES = {
 
 # specific for debug_toolbar
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": "dev_env.callback_show_debug_toolbar",
+    "SHOW_TOOLBAR_CALLBACK": "tests.util.callback_show_debug_toolbar",
 }
 
 # Minimal logging configuration for the app
