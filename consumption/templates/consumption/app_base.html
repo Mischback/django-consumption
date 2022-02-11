@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    {% spaceless %}
+    <title>
+      {% block page-title %}django-consumption development template{% endblock page-title %}
+    </title>
+    {% endspaceless %}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+{% block html-body %}
+    <div id="consumption-main">
+      {% block main %}
+      <strong>app_base.html</strong>: block "main"
+      {% endblock main %}
+    </div>
+{% endblock html-body %}
+  </body>
+</html>
