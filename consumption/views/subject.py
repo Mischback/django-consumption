@@ -39,11 +39,14 @@ class SubjectCreateView(LoginRequiredMixin, generic.CreateView):
     """
 
     template_name_suffix = "_create"
-    """Will use the template ``templates/consumption/subject_create.html``"""
+    """Uses the template ``templates/consumption/subject_create.html``."""
 
 
 class SubjectDetailView(generic.DetailView):
-    """Provide the details of :class:`~consumption.models.subject.Subject` instances."""
+    """Provide the details of :class:`~consumption.models.subject.Subject` instances.
+
+    Uses the template ``templates/consumption/subject_detail.html``.
+    """
 
     model = Subject
     """Required attribute, determining the model to work on."""
