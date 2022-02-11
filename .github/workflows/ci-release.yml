@@ -4,7 +4,7 @@ name: CI Release
 
 on:
   push:
-    branches: [t3mpl4t3]
+    branches: [main]
 
 jobs:
   build:
