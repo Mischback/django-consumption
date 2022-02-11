@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-"""A pluggable Django application to generate analogous, legacy, paper-based calendar inlays."""
+"""A pluggable Django application to track and visualize ressource consumption."""
 
 __author__ = "Mischback"
 """The current project owner."""
