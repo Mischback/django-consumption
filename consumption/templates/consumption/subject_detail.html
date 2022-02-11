@@ -4,4 +4,5 @@
 
 {% block main %}
 <h2>{{ subject_instance.name }}</h2>
+<a href="{% url "consumption:subject-update" subject_instance.id %}">update</a>
 {% endblock main %}

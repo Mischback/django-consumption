@@ -19,7 +19,7 @@
         <a href="{{ subject.get_absolute_url }}">{{ subject.name }}</a>
       </td>
       <td>
-        <!-- add actions here! -->
+        <a href="{% url "consumption:subject-update" subject.id %}">update</a>
       </td>
     </tr>
     {% endfor %}
