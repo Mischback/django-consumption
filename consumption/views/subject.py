@@ -56,3 +56,16 @@ class SubjectDetailView(generic.DetailView):
 
     pk_url_kwarg = "subject_id"
     """The keyword argument as provided in :source:`consumption.urls.py`."""
+
+
+class SubjectListView(generic.ListView):
+    """Provide a list of :class:`~consumption.models.subject.Subject` instances.
+
+    Uses the template ``templates/consumption/subject_list.html``.
+    """
+
+    model = Subject
+    """Required attribute, determining the model to work on."""
+
+    context_object_name = "subject_list"
+    """Provide a semantic name for the built-in context."""
