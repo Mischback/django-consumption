@@ -35,3 +35,16 @@ class SubjectCreateView(LoginRequiredMixin, generic.CreateView):
 
     template_name_suffix = "_create"
     """Will use the template ``templates/consumption/subject_create.html``"""
+
+
+class SubjectDetailView(generic.DetailView):
+    """Provide the details of :class:`~consumption.models.subject.Subject` instances."""
+
+    model = Subject
+    """Required attribute, determining the model to work on."""
+
+    context_object_name = "subject_instance"
+    """Provide a semantic name for the built-in context."""
+
+    pk_url_kwarg = "subject_id"
+    """The keyword argument as provided in :source:`consumption.urls.py`."""
