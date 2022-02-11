@@ -5,6 +5,7 @@
 # Django imports
 from django import forms
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -25,6 +26,13 @@ class Subject(models.Model):
 
     def __str__(self):  # noqa: D105
         return "{} ({})".format(self.name, self.id)  # pragma: nocover
+
+    def get_absolute_url(self):
+        """Return the absolute URL for instances of this model.
+
+        This may be considered the *default* URL for this model.
+        """
+        return reverse("consumption:subject-detail", args=[self.id])  # pragma: nocover
 
 
 class SubjectForm(forms.ModelForm):

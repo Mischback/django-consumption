@@ -17,6 +17,11 @@ class SubjectCreateView(LoginRequiredMixin, generic.CreateView):
     While this view requires a valid *login*, there is no check of permissions
     (as of now), meaning: every (authenticated) user is able to create
     :class:`~consumption.models.subject.Subject` objects.
+
+    After successfully creating a new instance of
+    :class:`~consumption.models.subject.Subject` the user will be redirected
+    to the URL as provided by
+    :meth:`Subject.get_absolute_url() <consumption.models.subject.Subject.get_absolute_url>`.
     """
 
     model = Subject
