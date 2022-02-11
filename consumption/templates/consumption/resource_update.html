@@ -1,0 +1,16 @@
+{% extends "consumption/app_base.html" %}
+
+{% block page-title %}Resource: Update {{ resource_instance.name }}{% endblock page-title %}
+
+{% block main %}
+<h2>Update {{ resource_instance.name }}</h2>
+
+<form method="post" novalidate class="consumption-form">
+  {% csrf_token %}
+
+  {{ form }}
+
+  <button type="submit" class="submit">Update Resource</button>
+  <button type="reset" class="cancel">Cancel</button>
+</form>
+{% endblock main %}
