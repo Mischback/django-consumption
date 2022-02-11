@@ -1,9 +1,9 @@
-###########################################
-Welcome to django-t3mpl4t3's documentation!
-###########################################
+##############################################
+Welcome to django-consumption's documentation!
+##############################################
 
 The application, including this documentation, lives
-`@GitHub <https://github.com/mischback/django-t3mpl4t3>`_.
+`@GitHub <https://github.com/mischback/django-consumtion>`_.
 
 
 .. toctree::
