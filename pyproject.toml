@@ -3,7 +3,7 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "django-t3mpl4t3"
+name = "django-consumption"
 authors = [{name = "Mischback"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -24,10 +24,10 @@ dependencies = [
 dynamic = ["version", "description"]
 
 [project.urls]
-Source = "https://github.com/Mischback/django-t3mpl4t3"
+Source = "https://github.com/Mischback/django-consumption"
 
 [tool.flit.module]
-name = "t3mpl4t3"
+name = "consumption"
 
 [tool.flit.sdist]
 exclude = [
@@ -48,7 +48,7 @@ exclude = [
 [tool.coverage.run]
 branch = true
 source = [
-  "t3mpl4t3",
+  "consumption",
   "tests"
 ]
 omit = [
@@ -175,7 +175,7 @@ commands =
 basepython = {[testenv:util]basepython}
 skip_install = true
 commands =
-  pip install --no-index --find-links={toxinidir}/dist django-t3mpl4t3
+  pip install --no-index --find-links={toxinidir}/dist django-consumption
 
 [testenv:util]
 basepython = python3
