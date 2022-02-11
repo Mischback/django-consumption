@@ -3,6 +3,7 @@
 """Provide the app's class to represent one type of consumed resource."""
 
 # Django imports
+from django import forms
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -51,3 +52,18 @@ class Resource(models.Model):
         return "{} ({}, {}) [{}]".format(
             self.name, self.unit, self.subject.id, self.id
         )  # pragma: nocover
+
+
+class ResourceForm(forms.ModelForm):
+    """Get and validate input for creating and updating ``Resource`` instances."""
+
+    template_name = "consumption/forms/generic.html"
+    """This template will be used to render the form.
+
+    This uses Django's form rendering, as introduced in v4.0, see
+    :djangoapi:`Outputting forms as HTML <forms/api/#ref-forms-api-outputting-html>`.
+    """
+
+    class Meta:  # noqa: D106
+        model = Resource
+        fields = "__all__"
