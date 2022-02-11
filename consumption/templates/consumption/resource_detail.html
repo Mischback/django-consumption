@@ -5,6 +5,7 @@
 {% block main %}
 <h2>{{ resource_instance.name }}</h2>
 <a href="{% url "consumption:resource-update" resource_instance.id %}">update</a>
+<a href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a>
 
 {% if resource_instance.description %}
 <div class="resource-description">{{ resource_instance.description }}</div>

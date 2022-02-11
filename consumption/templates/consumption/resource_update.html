@@ -13,4 +13,6 @@
   <button type="submit" class="submit">Update Resource</button>
   <button type="reset" class="cancel">Cancel</button>
 </form>
+
+<a href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a>
 {% endblock main %}
