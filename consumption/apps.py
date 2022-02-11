@@ -12,7 +12,7 @@ from django.apps import AppConfig
 logger = logging.getLogger(__name__)
 
 
-class t3mpl4t3Config(AppConfig):
+class ConsumptionConfig(AppConfig):
     """Application-specific configuration class, as required by Django.
 
     This sub-class of Django's ``AppConfig`` provides application-specific
@@ -20,5 +20,5 @@ class t3mpl4t3Config(AppConfig):
     :djangoapi:`Configuring Applications <applications/#configuring-applications>`).
     """
 
-    name = "t3mpl4t3"
-    verbose_name = "t3mpl4t3"
+    name = "consumption"
+    verbose_name = "Consumption"
