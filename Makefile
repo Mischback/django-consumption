@@ -137,7 +137,7 @@ django/makemessages :
 ## "$ django-admin makemigrations"; create migrations
 ## @category Django
 django/makemigrations :
-	$(MAKE) django django_command="makemigrations t3mpl4t3"
+	$(MAKE) django django_command="makemigrations consumption"
 .PHONY : django/makemigrations
 
 ## "$ django-admin migrate"; apply the project's migrations
@@ -237,13 +237,6 @@ util/flit/build :
 util/flit/publish :
 	$(MAKE) util/flit flit_argument="publish"
 .PHONY : util/flit/publish
-
-## Use "grep" to find all occurences of "t3mpl4t3", which must be modified to
-## convert the template into an actual usable app repository.
-## @category Utility
-util/repo/template :
-	grep -rnw . -e "t3mpl4t3.*" --exclude-dir={.git,.tox}
-.PHONY : util/repo/template
 
 
 # ### Sphinx-related commands

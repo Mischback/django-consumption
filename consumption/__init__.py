@@ -5,13 +5,13 @@
 __author__ = "Mischback"
 """The current project owner."""
 
-__app_name__ = "django-t3mpl4t3"
+__app_name__ = "django-consumption"
 """The name of the application."""
 
 __version__ = "0.0a1"
 """The current version."""
 
-default_app_config = "t3mpl4t3.apps.t3mpl4t3Config"
+default_app_config = "consumption.apps.ConsumptionConfig"
 """The path to the app's default configuration class.
 
 Consider this *legacy code*. See

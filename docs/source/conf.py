@@ -12,7 +12,7 @@ import django
 sys.path.insert(0, os.path.abspath("../../"))
 
 
-import t3mpl4t3  # noqa: isort:skip
+import consumption  # noqa: isort:skip
 
 
 # for `autodoc`, Django has to be setup (with a minimal setup)
@@ -21,10 +21,10 @@ django.setup()
 
 # ### Project Information
 
-project = t3mpl4t3.__app_name__
-author = t3mpl4t3.__author__
+project = consumption.__app_name__
+author = consumption.__author__
 copyright = "{}, {}".format(datetime.datetime.now().year, author)
-version = t3mpl4t3.__version__
+version = consumption.__version__
 release = version
 
 
@@ -56,7 +56,7 @@ extensions = [
 # "index" is already the default (since Sphinx 2.0), but better be explicit.
 master_doc = "index"
 
-modindex_common_prefix = ["t3mpl4t3."]
+modindex_common_prefix = ["consumption."]
 
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-templates_path
 templates_path = ["_templates"]
@@ -75,7 +75,7 @@ autosectionlabel_maxdepth = 2
 
 # ##### autoapi
 autoapi_type = "python"
-autoapi_dirs = ["../../t3mpl4t3"]
+autoapi_dirs = ["../../consumption"]
 
 # may be set to `False` when switching to manual directives, which is **hopefully* not necessary
 autoapi_generate_api_docs = True
@@ -141,12 +141,15 @@ def _add_django_roles(app):  # type: ignore[no-untyped-def]
 # ##### extlinks
 extlinks = {
     # will show commit's SHA1
-    "commit": ("https://github.com/mischback/django-t3mpl4t3/commit/%s", ""),
+    "commit": ("https://github.com/mischback/django-consumption/commit/%s", ""),
     # will show "issue [number]"
-    "issue": ("https://github.com/mischback/django-t3mpl4t3/issues/%s", "issue "),
+    "issue": ("https://github.com/mischback/django-consumption/issues/%s", "issue "),
     # A file or directory. GitHub redirects from blob to tree if needed.
     # will show file/path relative to root-directory of the repository
-    "source": ("https://github.com/mischback/django-t3mpl4t3/blob/development/%s", ""),
+    "source": (
+        "https://github.com/mischback/django-consumption/blob/development/%s",
+        "",
+    ),
     # also available by intersphinx :django:doc:
     "djangodoc": ("https://docs.djangoproject.com/en/{}/%s".format(django_version), ""),
     # also available by intersphinx (most likely as simple as specifying the full Python path)
