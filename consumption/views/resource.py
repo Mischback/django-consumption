@@ -56,3 +56,40 @@ class ResourceDetailView(generic.DetailView):
 
     pk_url_kwarg = "resource_id"
     """The keyword argument as provided in :mod:`consumption.urls`."""
+
+
+class ResourceUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """Generic class-based view to update :class:`~consumption.models.resource.Resource` objects.
+
+    While this view requires a valid *login*, there is no check of permissions
+    (as of now), meaning: every (authenticated) user is able to update any
+    :class:`~consumption.models.resource.Resource` object.
+
+    After successfully updating an instance of
+    :class:`~consumption.models.resource.Resource` the user will be redirected
+    to the URL as provided by
+    :meth:`Resource.get_absolute_url() <consumption.models.resource.Resource.get_absolute_url>`.
+    """
+
+    model = Resource
+    """Required attribute, determining the model to work on."""
+
+    form_class = ResourceForm
+    """Specify the form class to be used.
+
+    It's either the ``fields`` attribute or ``form_class``. This ultimatively
+    determines, which of the model's fields are rendered.
+
+    This app uses the ``form_class``, because it also overwrites the template
+    used for form rendering, see
+    :class:`~consumption.models.resource.ResourceForm` for details.
+    """
+
+    context_object_name = "resource_instance"
+    """Provide a semantic name for the built-in context."""
+
+    pk_url_kwarg = "resource_id"
+    """The keyword argument as provided in :mod:`consumption.urls`."""
+
+    template_name_suffix = "_update"
+    """Uses the template ``templates/consumption/resource_update.html``."""
