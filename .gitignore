@@ -1,0 +1,29 @@
+# tox's virtual environments
+.tox
+
+# while runnning the app from the tox environment, data is stored in a sqlite
+# database stored in test.sqlite3 / dev.sqlite3
+dev.sqlite3
+test.sqlite3
+
+# ignore Sphinx's build directory
+docs/build
+
+# ignore coverage-temporary files
+.coverage.*
+.coverage
+lcov.info
+
+# mypy's cache directory
+.mypy_cache
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ignore the compiled language files
+*.mo
+
+# ignore flit's build directory
+dist
