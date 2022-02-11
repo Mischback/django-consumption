@@ -55,7 +55,7 @@ LOGGING = {
         },
     },
     "loggers": {
-        "t3mpl4t3": {
+        "consumption": {
             "handlers": ["def_h"],
             "level": "DEBUG",
             "propagate": False,
