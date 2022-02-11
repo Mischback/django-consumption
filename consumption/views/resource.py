@@ -40,3 +40,19 @@ class ResourceCreateView(LoginRequiredMixin, generic.CreateView):
 
     template_name_suffix = "_create"
     """Uses the template ``templates/consumption/resource_create.html``."""
+
+
+class ResourceDetailView(generic.DetailView):
+    """Provide the details of :class:`~consumption.models.resource.Resource` instances.
+
+    Uses the template ``templates/consumption/resource_detail.html``.
+    """
+
+    model = Resource
+    """Required attribute, determining the model to work on."""
+
+    context_object_name = "resource_instance"
+    """Provide a semantic name for the built-in context."""
+
+    pk_url_kwarg = "resource_id"
+    """The keyword argument as provided in :mod:`consumption.urls`."""
