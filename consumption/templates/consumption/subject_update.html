@@ -1,9 +1,9 @@
 {% extends "consumption/app_base.html" %}
 
-{% block page-title %}Subject: Update a Subject instance{% endblock page-title %}
+{% block page-title %}Subject: Update {{ subject_instance.name }}{% endblock page-title %}
 
 {% block main %}
-<h2>Update a Subject instance</h2>
+<h2>Update {{ subject_instance.name }}</h2>
 
 <form method="post" novalidate class="consumption-form">
   {% csrf_token %}
@@ -13,4 +13,6 @@
   <button type="submit" class="submit">Update Subject</button>
   <button type="reset" class="cancel">Cancel</button>
 </form>
+
+<a href="{% url "consumption:subject-delete" subject_instance.id %}">delete</a>
 {% endblock main %}

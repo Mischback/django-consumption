@@ -98,6 +98,9 @@ class SubjectUpdateView(LoginRequiredMixin, generic.UpdateView):
     :class:`~consumption.models.subject.SubjectForm` for details.
     """
 
+    context_object_name = "subject_instance"
+    """Provide a semantic name for the built-in context."""
+
     pk_url_kwarg = "subject_id"
     """The keyword argument as provided in :mod:`consumption.urls`."""
 
