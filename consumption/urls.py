@@ -6,6 +6,7 @@
 from django.urls import path
 
 # app imports
+from consumption.views.resource import ResourceCreateView
 from consumption.views.subject import (
     SubjectCreateView,
     SubjectDeleteView,
@@ -34,4 +35,5 @@ urlpatterns = [
         SubjectDeleteView.as_view(),
         name="subject-delete",
     ),
+    path("resource/create/", ResourceCreateView.as_view(), name="resource-create"),
 ]
