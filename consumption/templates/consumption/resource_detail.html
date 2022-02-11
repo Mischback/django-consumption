@@ -1,0 +1,17 @@
+{% extends "consumption/app_base.html" %}
+
+{% block page-title %}Resource: {{ resource_instance.name }}{% endblock page-title %}
+
+{% block main %}
+<h2>{{ resource_instance.name }}</h2>
+<a href="{% url "consumption:resource-update" resource_instance.id %}">update</a>
+<a href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a>
+
+{% if resource_instance.description %}
+<div class="resource-description">{{ resource_instance.description }}</div>
+{% endif %}
+<div class="resource-meta">
+  <p>This resource is tracked for <a href="{% url "consumption:subject-detail" resource_instance.subject.id %}">{{ resource_instance.subject.name }}</a>.</p>
+  <p>The unit of this resource is <strong>{{ resource_instance.unit }}</strong></p>
+</div>
+{% endblock main %}
