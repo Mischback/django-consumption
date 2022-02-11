@@ -6,7 +6,11 @@
 from django.urls import path
 
 # app imports
-from consumption.views.resource import ResourceCreateView, ResourceDetailView
+from consumption.views.resource import (
+    ResourceCreateView,
+    ResourceDetailView,
+    ResourceUpdateView,
+)
 from consumption.views.subject import (
     SubjectCreateView,
     SubjectDeleteView,
@@ -42,5 +46,10 @@ urlpatterns = [
         "resource/<int:resource_id>/",
         ResourceDetailView.as_view(),
         name="resource-detail",
+    ),
+    path(
+        "resource/<int:resource_id>/update/",
+        ResourceUpdateView.as_view(),
+        name="resource-update",
     ),
 ]
