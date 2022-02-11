@@ -7,5 +7,5 @@ from django.test import SimpleTestCase
 
 
 # Add documentation if there is acutally code!
-class t3mpl4t3TestCase(SimpleTestCase):  # noqa: D101
+class ConsumptionTestCase(SimpleTestCase):  # noqa: D101
     pass
