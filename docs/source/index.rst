@@ -3,7 +3,7 @@ Welcome to django-consumption's documentation!
 ##############################################
 
 The application, including this documentation, lives
-`@GitHub <https://github.com/mischback/django-consumtion>`_.
+`@GitHub <https://github.com/mischback/django-consumption>`_.
 
 
 .. toctree::
