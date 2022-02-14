@@ -8,6 +8,7 @@ from django.urls import path
 # app imports
 from consumption.views.record import (
     RecordCreateView,
+    RecordDeleteView,
     RecordDetailView,
     RecordUpdateView,
 )
@@ -74,5 +75,10 @@ urlpatterns = [
         "record/<int:record_id>/update/",
         RecordUpdateView.as_view(),
         name="record-update",
+    ),
+    path(
+        "record/<int:record_id>/delete/",
+        RecordDeleteView.as_view(),
+        name="record-delete",
     ),
 ]
