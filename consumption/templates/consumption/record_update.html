@@ -1,0 +1,16 @@
+{% extends "consumption/app_base.html" %}
+
+{% block page-title %}Record: Update{% endblock page-title %}
+
+{% block main %}
+<h2>Update {{ record_instance.resource.name }} - {{ record_instance.timestamp }}</h2>
+
+<form method="post" novalidate class="consumption-form">
+  {% csrf_token %}
+
+  {{ form }}
+
+  <button type="submit" class="submit">Update Record</button>
+  <button type="reset" class="cancel">Cancel</button>
+</form>
+{% endblock main %}
