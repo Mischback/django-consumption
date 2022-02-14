@@ -39,3 +39,19 @@ class RecordCreateView(LoginRequiredMixin, generic.CreateView):
 
     template_name_suffix = "_create"
     """Uses the template ``templates/consumption/record_create.html``."""
+
+
+class RecordDetailView(generic.DetailView):
+    """Provide the details of :class:`~consumption.models.record.Record` instances.
+
+    Uses the template ``templates/consumption/record_detail.html``.
+    """
+
+    model = Record
+    """Required attribute, determining the model to work on."""
+
+    context_object_name = "record_instance"
+    """Provide a semantic name for the built-in context."""
+
+    pk_url_kwarg = "record_id"
+    """The keyword argument as provided in :mod:`consumption.urls`."""
