@@ -4,6 +4,7 @@
 
 {% block main %}
 <h2>{{ record_instance.resource.name }} - {{ record_instance.timestamp }}</h2>
+<a href="{% url "consumption:record-update" record_instance.id %}">update</a>
 
 <div>
   <ul>
