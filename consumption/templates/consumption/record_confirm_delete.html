@@ -1,0 +1,14 @@
+{% extends "consumption/app_base.html" %}
+
+{% block page-title %}Record: Delete{% endblock page-title %}
+
+{% block main %}
+<h2>Delete {{ record_instance.resource.name }} - {{ record_instance.timestamp }}</h2>
+
+<form method="post" novalidate class="consumption-form">
+  {% csrf_token %}
+
+  <p>Are you sure you want to delete this Record?</p>
+  <button type="submit" class="danger">Yes, I want to delete this Record!</button>
+</form>
+{% endblock main %}
