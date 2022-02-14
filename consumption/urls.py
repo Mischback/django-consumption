@@ -6,7 +6,11 @@
 from django.urls import path
 
 # app imports
-from consumption.views.record import RecordCreateView, RecordDetailView
+from consumption.views.record import (
+    RecordCreateView,
+    RecordDetailView,
+    RecordUpdateView,
+)
 from consumption.views.resource import (
     ResourceCreateView,
     ResourceDeleteView,
@@ -65,5 +69,10 @@ urlpatterns = [
         "record/<int:record_id>/",
         RecordDetailView.as_view(),
         name="record-detail",
+    ),
+    path(
+        "record/<int:record_id>/update/",
+        RecordUpdateView.as_view(),
+        name="record-update",
     ),
 ]
