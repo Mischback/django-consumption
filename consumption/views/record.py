@@ -4,6 +4,7 @@
 
 # Django imports
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views import generic
 
 # app imports
@@ -92,3 +93,42 @@ class RecordUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     template_name_suffix = "_update"
     """Uses the template ``templates/consumption/record_update.html``."""
+
+
+class RecordDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """Generic class-based view to delete :class:`~consumption.models.record.Record` objects.
+
+    While this view requires a valid *login*, there is no check of permissions
+    (as of now), meaning: every (authenticated) user is able to delete any
+    :class:`~consumption.models.record.Record` object.
+
+    After successfully deleting an instance of
+    :class:`~consumption.models.record.Record` the user will be redirected
+    to the URL of :class:`~consumption.views.resource.ResourceDetailView` of the
+    :class:`~consumption.models.resource.Resource` instance the ``Record`` was
+    associated with.
+
+    Uses the template ``templates/consumption/record_confirm_delete.html``.
+    """
+
+    model = Record
+    """Required attribute, determining the model to work on."""
+
+    context_object_name = "record_instance"
+    """Provide a semantic name for the built-in context."""
+
+    pk_url_kwarg = "record_id"
+    """The keyword argument as provided in :mod:`consumption.urls`."""
+
+    def get_success_url(self):
+        """Determine the URL for redirecting after successful deletion.
+
+        This has to be done dynamically with a method instead of statically
+        with the ``success_url`` attribute, because the user should be
+        redirected to the *parent*
+        :class:`~consumption.models.resource.Resource` instance.
+        """
+        resource = self.object.resource
+        return reverse_lazy(
+            "consumption:resource-detail", kwargs={"resource_id": resource.id}
+        )
