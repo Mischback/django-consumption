@@ -43,7 +43,7 @@ class Record(models.Model):
     def __str__(self):  # noqa: D105
         return "{}: {} ({}, {})".format(
             self.timestamp, self.reading, self.resource.unit, self.resource.name
-        )
+        )  # pragma: nocover
 
     def get_absolute_url(self):
         """Return the absolute URL for instances of this model.
