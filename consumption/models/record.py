@@ -5,6 +5,7 @@
 # Django imports
 from django import forms
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 # app imports
@@ -43,6 +44,13 @@ class Record(models.Model):
         return "{}: {} ({}, {})".format(
             self.timestamp, self.reading, self.resource.unit, self.resource.name
         )
+
+    def get_absolute_url(self):
+        """Return the absolute URL for instances of this model.
+
+        This may be considered the *default* URL for this model.
+        """
+        return reverse("consumption:record-detail", args=[self.id])  # pragma: nocover
 
 
 class RecordForm(forms.ModelForm):
