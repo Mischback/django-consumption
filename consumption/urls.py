@@ -6,7 +6,7 @@
 from django.urls import path
 
 # app imports
-from consumption.views.record import RecordCreateView
+from consumption.views.record import RecordCreateView, RecordDetailView
 from consumption.views.resource import (
     ResourceCreateView,
     ResourceDeleteView,
@@ -61,4 +61,9 @@ urlpatterns = [
     ),
     # Record-related URLs
     path("record/create/", RecordCreateView.as_view(), name="record-create"),
+    path(
+        "record/<int:record_id>/",
+        RecordDetailView.as_view(),
+        name="record-detail",
+    ),
 ]
