@@ -6,7 +6,12 @@
 from django.contrib import admin
 
 # app imports
-from consumption.models import Resource, Subject
+from consumption.models import Record, Resource, Subject
+
+
+@admin.register(Record)
+class RecordAdmin(admin.ModelAdmin):
+    """Provide (most-basic) integration into Django's admin interface."""
 
 
 @admin.register(Resource)
