@@ -57,6 +57,53 @@ class ResourceDetailView(generic.DetailView):
     pk_url_kwarg = "resource_id"
     """The keyword argument as provided in :mod:`consumption.urls`."""
 
+    def get_queryset(self):
+        """Optimize database queries.
+
+        Override to the default implementation of ``get_queryset()`` to
+        select the referenced instance of
+        :class:`~consumption.models.subject.Subject` (referenced by
+        :attr:`Resource.subject <consumption.models.resource.Resource.subject>`)
+        and prefetch all associated instances of
+        :class:`~consumption.models.record.Record` (that is: all instances of
+        :class:`~consumption.models.record.Record` that reference this instance
+        of :class:`~consumption.models.resource.Resource` by their
+        :attr:`~consumption.models.record.Record.resource` attribute).
+
+        Warning
+        -------
+        This method does only modify / extend / prepare the actual database
+        queries, it does not provide the resulting objects in the rendering
+        context for the template (actually the
+        :class:`~consumption.models.subject.Subject` instance will be easily
+        accessible by using ``resource_instance.subject`` in the template).
+
+        See
+        :meth:`~consumption.views.resource.ResourceDetailView.get_context_data`
+        for that.
+        """
+        return (
+            super()
+            .get_queryset()
+            .select_related("subject")
+            .prefetch_related("record_set")
+        )
+
+    def get_context_data(self, **kwargs):
+        """Add a list of related ``Record`` instances to the context.
+
+        :meth:`~consumption.views.resource.ResourceDetailView.get_queryset`
+        will optimize the database access, but the list of
+        :class:`~consumption.models.record.Record` instances must still be
+        added to the rendering context.
+        """
+        context = super().get_context_data(**kwargs)
+
+        if self.object:
+            context["records"] = self.object.record_set.all()
+
+        return context
+
 
 class ResourceUpdateView(LoginRequiredMixin, generic.UpdateView):
     """Generic class-based view to update :class:`~consumption.models.resource.Resource` objects.
