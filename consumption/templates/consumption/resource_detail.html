@@ -14,8 +14,12 @@
   <p>This resource is tracked for <a href="{% url "consumption:subject-detail" resource_instance.subject.id %}">{{ resource_instance.subject.name }}</a>.</p>
   <p>The unit of this resource is <strong>{{ resource_instance.unit }}</strong></p>
 </div>
-{% if records %}
+
 <div class="resource-records">
+  <a href="{% url "consumption:record-create" resource_instance.id %}">
+    <button>add Record for this Resource</button>
+  </a>
+  {% if records %}
   <table>
     <tr>
       <th>Date/Time</th>
@@ -33,6 +37,6 @@
       </tr>
     {% endfor %}
   </table>
+  {% endif %}
 </div>
-{% endif %}
 {% endblock main %}
