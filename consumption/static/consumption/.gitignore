@@ -1,0 +1,22 @@
+# specific .gitignore for this directory
+
+# ignore everything...
+*
+
+# ... except this .gitignore and the README
+!.gitignore
+!README
+
+# do NOT ignore the "css" directory...
+!css
+# ... but its content...
+css/*
+# ... except the README
+!css/README
+
+# do NOT ignore the "js" directory...
+!js
+# ... but its content...
+js/*
+# ... except the README
+!js/README
