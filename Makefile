@@ -175,7 +175,7 @@ host_port ?= "0:8000"
 ## Host and port might be specified by "make django/runserver host_port="0:4444"
 ## to run the server on port "4444".
 ## @category Django
-django/runserver : django/migrate django/clearsessions
+django/runserver : django/migrate django/clearsessions build/static
 	$(MAKE) django django_command="runserver $(host_port)"
 .PHONY : django/runserver
 
@@ -230,6 +230,8 @@ util/prettier :
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
 
+## Run stylelint on all files (*.scss)
+## @category Code Quality
 util/stylelint :
 	$(MAKE) util/pre-commit pre-commit_id="stylelint" pre-commit_files="--all-files"
 .PHONY : util/stylelint
@@ -297,6 +299,7 @@ sphinx/linkcheck : $(STAMP_TOX_SPHINX)
 
 $(STAMP_STATIC_ASSETS_READY) : $(STATIC_ASSETS_BUILD_CSS)
 	$(create_dir)
+	echo "Building static assets..."
 	touch $@
 
 # utility function to create required directories on the fly
