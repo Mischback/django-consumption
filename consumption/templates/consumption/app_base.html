@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +9,7 @@
     </title>
     {% endspaceless %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="{% static "consumption/js/bundle.js" %}"></script>
   </head>
   <body>
 {% block html-body %}

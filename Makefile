@@ -20,8 +20,10 @@ STATIC_ASSETS_SRC_DIR := $(STATIC_ASSETS_DIR)/_src
 STATIC_ASSETS_BUILD_DIR := $(STATIC_ASSETS_DIR)/consumption
 
 STATIC_ASSETS_BUILD_CSS := $(STATIC_ASSETS_BUILD_DIR)/css/style.css
+STATIC_ASSETS_BUILD_JS := $(STATIC_ASSETS_BUILD_DIR)/js/bundle.js
 
 STATIC_ASSETS_SRC_FILES_SASS := $(shell find $(STATIC_ASSETS_SRC_DIR)/sass -type f)
+STATIC_ASSETS_SRC_FILES_TS := $(shell find $(STATIC_ASSETS_SRC_DIR)/ts -false -o -type f)
 
 DEVELOPMENT_REQUIREMENTS := requirements/common.txt requirements/coverage.txt requirements/development.txt
 DOCUMENTATION_REQUIREMENTS := requirements/common.txt requirements/documentation.txt docs/source/conf.py
@@ -297,10 +299,16 @@ sphinx/linkcheck : $(STAMP_TOX_SPHINX)
 
 # ### INTERNAL RECIPES
 
-$(STAMP_STATIC_ASSETS_READY) : $(STATIC_ASSETS_BUILD_CSS)
+$(STAMP_STATIC_ASSETS_READY) : $(STATIC_ASSETS_BUILD_CSS) $(STATIC_ASSETS_BUILD_JS)
 	$(create_dir)
 	echo "Building static assets..."
 	touch $@
+
+$(STATIC_ASSETS_BUILD_JS) : $(STATIC_ASSETS_SRC_FILES_TS) | $(STAMP_NODE)
+	$(create_dir)
+	npx tsc && \
+	npx browserify $(STATIC_ASSETS_DIR)/.tmp/*.js -o $@ && \
+	rm -rf $(STATIC_ASSETS_DIR)/.tmp
 
 # utility function to create required directories on the fly
 create_dir = @mkdir -p $(@D)
