@@ -224,6 +224,12 @@ util/isort :
 	$(MAKE) util/pre-commit pre-commit_id="isort" pre-commit_files="--all-files"
 .PHONY : util/isort
 
+## Run prettier on all files (see .prettierignore)
+## @category Code Quality
+util/prettier :
+	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
+.PHONY : util/prettier
+
 pre-commit_id ?= ""
 pre-commit_files ?= ""
 ## Run all code quality tools as defined in .pre-commit-config.yaml

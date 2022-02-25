@@ -5,7 +5,5 @@
     "**/.mypy_cache/**": true,
     "**/docs/build/**": true
   },
-  "python.analysis.extraPaths": [
-    ".tox/django/lib/python3.9/site-packages"
-  ]
+  "python.analysis.extraPaths": [".tox/django/lib/python3.9/site-packages"]
 }
