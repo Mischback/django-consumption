@@ -257,7 +257,7 @@ util/pre-commit/update : $(STAMP_TOX_UTIL)
 .PHONY : util/pre-commit/update
 
 flit_argument ?= "--version"
-util/flit : $(STAMP_TOX_UTIL)
+util/flit : $(STAMP_TOX_UTIL) $(STAMP_STATIC_ASSETS_READY)
 	tox -q -e util -- flit $(flit_argument)
 .PHONY : util/flit
 
