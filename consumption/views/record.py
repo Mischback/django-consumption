@@ -68,6 +68,19 @@ class RecordCreateView(LoginRequiredMixin, generic.CreateView):
 
         return kwargs
 
+    def get_success_url(self):
+        """Determine the URL for redirecting after successful deletion.
+
+        This has to be done dynamically with a method instead of statically
+        with the ``success_url`` attribute, because the user should be
+        redirected to the *parent*
+        :class:`~consumption.models.resource.Resource` instance.
+        """
+        resource = self.object.resource
+        return reverse_lazy(
+            "consumption:resource-detail", kwargs={"resource_id": resource.id}
+        )
+
 
 class RecordDetailView(generic.DetailView):
     """Provide the details of :class:`~consumption.models.record.Record` instances.
