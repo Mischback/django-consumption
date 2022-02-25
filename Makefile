@@ -170,7 +170,7 @@ django/migrate :
 .PHONY : django/migrate
 
 host_port ?= "0:8000"
-## "django-admin runserver"; runs Django's development server with host = "0"
+## "$ django-admin runserver"; runs Django's development server with host = "0"
 ## and port = "8000".
 ## Host and port might be specified by "make django/runserver host_port="0:4444"
 ## to run the server on port "4444".
@@ -179,7 +179,7 @@ django/runserver : django/migrate django/clearsessions build/static
 	$(MAKE) django django_command="runserver $(host_port)"
 .PHONY : django/runserver
 
-## "django-admin shell"; run a REPL with the project's settings
+## "$ django-admin shell"; run a REPL with the project's settings
 ## @category Django
 django/shell :
 	$(MAKE) django django_command="shell"
