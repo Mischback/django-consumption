@@ -14,15 +14,32 @@
 # left untouched.
 
 # ### INTERNAL SETTINGS / CONSTANTS
-TOX_WORK_DIR := .tox
-TOX_DJANGO_ENV := $(TOX_WORK_DIR)/django
-TOX_SPHINX_ENV := $(TOX_WORK_DIR)/sphinx
-TOX_TEST_ENV := $(TOX_WORK_DIR)/testing
-TOX_UTIL_ENV := $(TOX_WORK_DIR)/util
+
+STATIC_ASSETS_DIR := consumption/static
+STATIC_ASSETS_SRC_DIR := $(STATIC_ASSETS_DIR)/_src
+STATIC_ASSETS_BUILD_DIR := $(STATIC_ASSETS_DIR)/consumption
+
+STATIC_ASSETS_BUILD_CSS := $(STATIC_ASSETS_BUILD_DIR)/css/style.css
+
+STATIC_ASSETS_SRC_FILES_SASS := $(shell find $(STATIC_ASSETS_SRC_DIR)/sass -type f)
 
 DEVELOPMENT_REQUIREMENTS := requirements/common.txt requirements/coverage.txt requirements/development.txt
 DOCUMENTATION_REQUIREMENTS := requirements/common.txt requirements/documentation.txt docs/source/conf.py
 UTIL_REQUIREMENTS := requirements/coverage.txt requirements/util.txt
+
+
+# Make's internal stamp directory
+# Stamps are used to keep track of certain build steps.
+# Should be included in .gitignore
+STAMP_DIR := .make-stamps
+
+STAMP_TOX_DJANGO := $(STAMP_DIR)/tox-django
+STAMP_TOX_SPHINX := $(STAMP_DIR)/tox-sphinx
+STAMP_TOX_TEST := $(STAMP_DIR)/tox-testing
+STAMP_TOX_UTIL := $(STAMP_DIR)/tox-util
+STAMP_NODE := $(STAMP_DIR)/node-ready
+STAMP_STATIC_ASSETS_READY := $(STAMP_DIR)/static-assets-ready
+STAMP_STATIC_CSS_READY := $(STAMP_DIR)/static-css-ready
 
 # some make settings
 .SILENT :
@@ -66,6 +83,12 @@ clean :
 .PHONY : clean
 
 
+## Build the app's static assets
+## @category Build
+build/static : $(STAMP_STATIC_ASSETS_READY)
+.PHONY : build/static
+
+
 ## Verify that the packaged app can be installed; used during CI only
 ## @category CI
 ci/test/installation :
@@ -83,7 +106,7 @@ dev/coverage : clean dev/test
 test_command ?= ""
 ## Run the test suite
 ## @category Development
-dev/test : $(TOX_TEST_ENV)
+dev/test : $(STAMP_TOX_TEST)
 	tox -q -e testing -- $(test_command)
 .PHONY : dev/test
 
@@ -98,7 +121,7 @@ dev/test/tag :
 # ### Django management commands
 
 django_command ?= "version"
-django : $(TOX_DJANGO_ENV)
+django : $(STAMP_TOX_DJANGO)
 	tox -q -e django -- $(django_command)
 .PHONY : django
 
@@ -205,24 +228,24 @@ pre-commit_id ?= ""
 pre-commit_files ?= ""
 ## Run all code quality tools as defined in .pre-commit-config.yaml
 ## @category Code Quality
-util/pre-commit : $(TOX_UTIL_ENV)
+util/pre-commit : $(STAMP_TOX_UTIL)
 	tox -q -e util -- pre-commit run $(pre-commit_files) $(pre-commit_id)
 .PHONY : util/pre-commit
 
 ## Install pre-commit hooks to be executed automatically
 ## @category Code Quality
-util/pre-commit/install : $(TOX_UTIL_ENV)
+util/pre-commit/install : $(STAMP_TOX_UTIL)
 	tox -q -e util -- pre-commit install
 .PHONY : util/pre-commit/install
 
 ## Update pre-commit hooks
 ## @category Code Quality
-util/pre-commit/update : $(TOX_UTIL_ENV)
+util/pre-commit/update : $(STAMP_TOX_UTIL)
 	tox -q -e util -- pre-commit autoupdate
 .PHONY : util/pre-commit/update
 
 flit_argument ?= "--version"
-util/flit : $(TOX_UTIL_ENV)
+util/flit : $(STAMP_TOX_UTIL)
 	tox -q -e util -- flit $(flit_argument)
 .PHONY : util/flit
 
@@ -243,7 +266,7 @@ util/flit/publish :
 
 ## Build the documentation using "Sphinx"
 ## @category Development
-sphinx/build/html : $(TOX_SPHINX_ENV)
+sphinx/build/html : $(STAMP_TOX_SPHINX)
 	tox -q -e sphinx
 .PHONY : sphinx/build/html
 
@@ -255,24 +278,54 @@ sphinx/serve/html : sphinx/build/html
 
 ## Check documentation's external links
 ## @category Development
-sphinx/linkcheck : $(TOX_SPHINX_ENV)
+sphinx/linkcheck : $(STAMP_TOX_SPHINX)
 	tox -q -e sphinx -- make linkcheck
 .PHONY : sphinx/linkcheck
 
 
 # ### INTERNAL RECIPES
-$(TOX_DJANGO_ENV) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+
+$(STAMP_STATIC_ASSETS_READY) : $(STATIC_ASSETS_BUILD_CSS)
+	$(create_dir)
+	touch $@
+
+# utility function to create required directories on the fly
+create_dir = @mkdir -p $(@D)
+
+$(STAMP_TOX_DJANGO) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+	$(create_dir)
 	tox --recreate -e django
+	touch $@
 
-$(TOX_SPHINX_ENV) : $(DOCUMENTATION_REQUIREMENTS) pyproject.toml
+$(STAMP_TOX_SPHINX) : $(DOCUMENTATION_REQUIREMENTS) pyproject.toml
+	$(create_dir)
 	tox --recreate -e sphinx
+	touch $@
 
-$(TOX_TEST_ENV) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+$(STAMP_TOX_TEST) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+	$(create_dir)
 	tox --recreate -e testing
+	touch $@
 
-$(TOX_UTIL_ENV) : $(UTIL_REQUIREMENTS) pyproject.toml .pre-commit-config.yaml
+$(STAMP_TOX_UTIL) : $(UTIL_REQUIREMENTS) pyproject.toml .pre-commit-config.yaml
+	$(create_dir)
 	tox --recreate -e util
+	touch $@
 
+$(STAMP_NODE) : package.json
+	$(create_dir)
+	npm install
+	touch $@
+
+# This is the generic recipe to compile SASS sources to CSS
+# Please note: This is not an optimized stylesheet! It includes source maps
+# and is not minimized!
+$(STATIC_ASSETS_BUILD_DIR)/css/%.css : $(STATIC_ASSETS_SRC_DIR)/sass/%.scss $(STATIC_ASSETS_SRC_FILES_SASS) | $(STAMP_NODE)
+	npx sass $<:$@ --style=expanded --source-map --stop-on-error
+
+
+# ### The following stuff implements the "self-documenting Makefile" function
+# ### DO NOT TOUCH!
 
 # fancy colors
 RULE_COLOR := "$$(tput setaf 6)"
