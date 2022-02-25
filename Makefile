@@ -230,6 +230,10 @@ util/prettier :
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
 
+util/stylelint :
+	$(MAKE) util/pre-commit pre-commit_id="stylelint" pre-commit_files="--all-files"
+.PHONY : util/stylelint
+
 pre-commit_id ?= ""
 pre-commit_files ?= ""
 ## Run all code quality tools as defined in .pre-commit-config.yaml

@@ -33,6 +33,8 @@ jobs:
         run: make util/doc8
       - name: Run prettier
         run: make util/prettier
+      - name: Run stylelint
+        run: make util/stylelint
       - name: Build Python Package
         run: make util/flit/build
       - name: Upload *.whl
