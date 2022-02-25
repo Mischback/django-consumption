@@ -67,6 +67,11 @@ urlpatterns = [
     # Record-related URLs
     path("record/create/", RecordCreateView.as_view(), name="record-create"),
     path(
+        "record/create/<int:resource_id>/",
+        RecordCreateView.as_view(),
+        name="record-create",
+    ),
+    path(
         "record/<int:record_id>/",
         RecordDetailView.as_view(),
         name="record-detail",

@@ -39,6 +39,7 @@ class Record(models.Model):
         app_label = "consumption"
         verbose_name = _("Record")
         verbose_name_plural = _("Records")
+        ordering = ["-timestamp"]
 
     def __str__(self):  # noqa: D105
         return "{}: {} ({}, {})".format(

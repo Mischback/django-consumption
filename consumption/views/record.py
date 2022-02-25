@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-"""Views related to the :class:`~consumption.models.subject.Subject` model."""
+"""Views related to the :class:`~consumption.models.record.Record` model."""
 
 # Django imports
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +17,15 @@ class RecordCreateView(LoginRequiredMixin, generic.CreateView):
     While this view requires a valid *login*, there is no check of permissions
     (as of now), meaning: every (authenticated) user is able to create
     :class:`~consumption.models.record.Record` objects.
+
+    The view supports two different operation modes:
+
+        - create a new
+          :class:`~consumption.models.record.Record` instance *from scratch*;
+        - create a new instance of
+          :class:`~consumption.models.record.Record` with a pre-defined
+          :class:`~consumption.models.resource.Resource` instance to associate
+          the new instance to.
 
     After successfully creating a new instance of
     :class:`~consumption.models.record.Record` the user will be redirected
@@ -40,6 +49,37 @@ class RecordCreateView(LoginRequiredMixin, generic.CreateView):
 
     template_name_suffix = "_create"
     """Uses the template ``templates/consumption/record_create.html``."""
+
+    def get_form_kwargs(self):
+        """Provide *initial values* for the form.
+
+        This method implements the two operation modes.
+
+        If a ``resource_id`` is provided as an URL parameter, the referenced
+        :class:`~consumption.models.resource.Resource` instance is provided as
+        initial value while rendering the form (template).
+        """
+        kwargs = super().get_form_kwargs()
+
+        try:
+            kwargs["initial"]["resource"] = self.kwargs["resource_id"]
+        except KeyError:
+            pass
+
+        return kwargs
+
+    def get_success_url(self):  # pragma: nocover
+        """Determine the URL for redirecting after successful deletion.
+
+        This has to be done dynamically with a method instead of statically
+        with the ``success_url`` attribute, because the user should be
+        redirected to the *parent*
+        :class:`~consumption.models.resource.Resource` instance.
+        """
+        resource = self.object.resource
+        return reverse_lazy(
+            "consumption:resource-detail", kwargs={"resource_id": resource.id}
+        )
 
 
 class RecordDetailView(generic.DetailView):
@@ -120,7 +160,7 @@ class RecordDeleteView(LoginRequiredMixin, generic.DeleteView):
     pk_url_kwarg = "record_id"
     """The keyword argument as provided in :mod:`consumption.urls`."""
 
-    def get_success_url(self):
+    def get_success_url(self):  # pragma: nocover
         """Determine the URL for redirecting after successful deletion.
 
         This has to be done dynamically with a method instead of statically
