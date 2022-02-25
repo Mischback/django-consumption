@@ -68,7 +68,7 @@ class RecordCreateView(LoginRequiredMixin, generic.CreateView):
 
         return kwargs
 
-    def get_success_url(self):
+    def get_success_url(self):  # pragma: nocover
         """Determine the URL for redirecting after successful deletion.
 
         This has to be done dynamically with a method instead of statically
@@ -160,7 +160,7 @@ class RecordDeleteView(LoginRequiredMixin, generic.DeleteView):
     pk_url_kwarg = "record_id"
     """The keyword argument as provided in :mod:`consumption.urls`."""
 
-    def get_success_url(self):
+    def get_success_url(self):  # pragma: nocover
         """Determine the URL for redirecting after successful deletion.
 
         This has to be done dynamically with a method instead of statically
