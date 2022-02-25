@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-"""Views related to the :class:`~consumption.models.subject.Subject` model."""
+"""Views related to the :class:`~consumption.models.resource.Resource` model."""
 
 # Django imports
 from django.contrib.auth.mixins import LoginRequiredMixin
