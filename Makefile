@@ -232,6 +232,15 @@ util/prettier :
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
 
+# This does use the local installation of "prettier" in the repository's
+# environment.
+# This allows management of additional dependencies (none for prettier, several
+# for e.g. stylelint), as these dependencies are tracked and updated in the
+# repositories "package.json".
+util/local/prettier : | $(STAMP_NODE)
+	npx prettier --ignore-unknown --write
+.PHONY : util/local/prettier
+
 ## Run stylelint on all files (*.scss)
 ## @category Code Quality
 util/stylelint :
