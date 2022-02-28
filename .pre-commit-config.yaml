@@ -45,11 +45,6 @@ repos:
   # lint CSS/JS related code
   - repo: local
     hooks:
-      - id: eslint
-        name: eslint
-        language: system
-        types_or: ["javascript", "ts"]
-        entry: npx eslint --fix
       - id: prettier
         name: prettier
         language: system
@@ -69,6 +64,11 @@ repos:
             "yaml",
           ]
         entry: npx prettier --ignore-unknown --write
+      - id: eslint
+        name: eslint
+        language: system
+        types_or: ["javascript", "ts"]
+        entry: npx eslint --fix
       - id: stylelint
         name: stylelint
         language: system

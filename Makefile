@@ -202,6 +202,20 @@ util/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
 .PHONY : util/black
 
+# This command uses a local installation of "eslint" as specified by the
+# repository's "package.json".
+# This is done to enable updates of the used npm packages with dependabot.
+# While this is not strictly necessary for "eslint" itsself, pre-commit's
+# "autoupdate" does not work on "additional_dependencies"
+# Please note that the actual command to run "eslint" is provided in
+# ".pre-commit-config.yaml" only.
+# Could not find another way to make this work!
+## Run eslint on all files (*.js, *.ts)
+## @category Code Quality
+util/eslint : | $(STAMP_NODE)
+	$(MAKE) util/pre-commit pre-commit_id="eslint" pre-commit_files="--all-files"
+.PHONY : util/eslint
+
 ## Run djlint on all files (*.html)
 ## @category Code Quality
 util/djlint :
@@ -241,20 +255,6 @@ util/isort :
 util/prettier : | $(STAMP_NODE)
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
-
-# This command uses a local installation of "eslint" as specified by the
-# repository's "package.json".
-# This is done to enable updates of the used npm packages with dependabot.
-# While this is not strictly necessary for "eslint" itsself, pre-commit's
-# "autoupdate" does not work on "additional_dependencies"
-# Please note that the actual command to run "eslint" is provided in
-# ".pre-commit-config.yaml" only.
-# Could not find another way to make this work!
-## Run eslint on all files (*.js, *.ts)
-## @category Code Quality
-util/eslint : | $(STAMP_NODE)
-	$(MAKE) util/pre-commit pre-commit_id="eslint" pre-commit_files="--all-files"
-.PHONY : util/eslint
 
 # This command uses a local installation of "stylelint" as specified by the
 # repository's "package.json".
