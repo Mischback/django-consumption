@@ -1,0 +1,22 @@
+button,
+.fake-button {
+  display: inline-block;
+  margin: 0.25em;
+  padding: 0.25em 0.5em;
+  border: 1px solid #000;
+  border-radius: 0.25rem;
+  font-family: system-ui, sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button-create,
+.button-update,
+.button-safety {
+  background: $base-color-green;
+  color: $color-bright-fg;
+}
