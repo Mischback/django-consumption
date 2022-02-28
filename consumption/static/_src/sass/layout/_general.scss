@@ -3,8 +3,13 @@
  * Provide general settings regarding the layout.
  */
 
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+
 body {
   box-sizing: border-box;
-  background: $color_default-bg;
+  background: $color-default-bg;
   color: $color-default-text;
 }
