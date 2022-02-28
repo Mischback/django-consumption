@@ -48,7 +48,21 @@ repos:
       - id: prettier
         name: prettier
         language: system
-        types: [text]
+        types_or:
+          [
+            "css",
+            "scss",
+            "html",
+            "javascript",
+            "json",
+            "json5",
+            "jsx",
+            "markdown",
+            "mdx",
+            "ts",
+            "tsx",
+            "yaml",
+          ]
         entry: npx prettier --ignore-unknown --write
       - id: stylelint
         name: stylelint
