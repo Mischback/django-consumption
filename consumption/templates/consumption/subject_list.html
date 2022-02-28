@@ -22,8 +22,10 @@
           <a href="{{ subject.get_absolute_url }}">{{ subject.name }}</a>
         </td>
         <td>
-          <a href="{% url "consumption:subject-update" subject.id %}">update</a>
-          <a href="{% url "consumption:subject-delete" subject.id %}">delete</a>
+          <ul class="object-actions subject-actions">
+            <li><a class="fake-button" href="{% url "consumption:subject-update" subject.id %}">update</a></li>
+            <li><a class="fake-button" href="{% url "consumption:subject-delete" subject.id %}">delete</a></li>
+          </ul>
         </td>
       </tr>
       {% endfor %}

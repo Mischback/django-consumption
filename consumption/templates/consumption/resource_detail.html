@@ -7,8 +7,8 @@
   <section class="document-head">
     <h2>{{ resource_instance.name }}</h2>
     <ul class="object-actions resource-actions">
-      <li><a href="{% url "consumption:resource-update" resource_instance.id %}">update</a></li>
-      <li><a href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a></li>
+      <li><a class="fake-button" href="{% url "consumption:resource-update" resource_instance.id %}">update</a></li>
+      <li><a class="fake-button" href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a></li>
     </ul>
   </section>
   <section class="object-meta resource-meta">
@@ -33,8 +33,10 @@
           <td>{{ record.timestamp }}</td>
           <td>{{ record.reading }} {{ resource_instance.unit }}</td>
           <td>
-            <a href="{% url "consumption:record-update" record.id %}">update</a> |
-            <a href="{% url "consumption:record-delete" record.id %}">delete</a>
+            <ul class="object-actions record-actions">
+              <li><a class="fake-button" href="{% url "consumption:record-update" record.id %}">update</a></li>
+              <li><a class="fake-button" href="{% url "consumption:record-delete" record.id %}">delete</a></li>
+            </ul>
           </td>
         </tr>
       {% endfor %}

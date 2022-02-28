@@ -7,8 +7,8 @@
   <section class="document-head">
     <h2>{{ record_instance.resource.name }} - {{ record_instance.timestamp }}</h2>
     <ul class="object-actions record-actions">
-      <li><a href="{% url "consumption:record-update" record_instance.id %}">update</a></li>
-      <li><a href="{% url "consumption:record-delete" record_instance.id %}">delete</a></li>
+      <li><a class="fake-button" href="{% url "consumption:record-update" record_instance.id %}">update</a></li>
+      <li><a class="fake-button" href="{% url "consumption:record-delete" record_instance.id %}">delete</a></li>
     </ul>
   </section>
   <section class="object-meta record-meta">
