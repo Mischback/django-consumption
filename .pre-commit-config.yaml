@@ -67,7 +67,7 @@ repos:
       - id: stylelint
         name: stylelint
         language: system
-        types: ["css", "scss"]
+        types_or: ["css", "scss"]
         entry: npx stylelint --fix
   - repo: https://github.com/pycqa/doc8
     rev: 0.10.1
