@@ -3,16 +3,22 @@
 {% block page-title %}Resource: Update {{ resource_instance.name }}{% endblock page-title %}
 
 {% block main %}
-<h2>Update {{ resource_instance.name }}</h2>
+<section class="consumption-document">
+  <section class="document-head">
+    <h2>Update {{ resource_instance.name }}</h2>
+  </section>
+  <section>
+    <form method="post" novalidate class="consumption-form">
+      {% csrf_token %}
 
-<form method="post" novalidate class="consumption-form">
-  {% csrf_token %}
+      {{ form }}
 
-  {{ form }}
-
-  <button type="submit" class="submit">Update Resource</button>
-  <button type="reset" class="cancel">Cancel</button>
-</form>
-
-<a href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a>
+      <button type="submit" class="submit">Update Resource</button>
+      <button type="reset" class="cancel">Cancel</button>
+    </form>
+    <ul class="object-actions resource-actions">
+      <li><a href="{% url "consumption:resource-delete" resource_instance.id %}">delete</a></li>
+    </ul>
+  </section>
+</section>
 {% endblock main %}

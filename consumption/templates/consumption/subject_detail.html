@@ -3,7 +3,13 @@
 {% block page-title %}Subject: {{ subject_instance.name }}{% endblock page-title %}
 
 {% block main %}
-<h2>{{ subject_instance.name }}</h2>
-<a href="{% url "consumption:subject-update" subject_instance.id %}">update</a>
-<a href="{% url "consumption:subject-delete" subject_instance.id %}">delete</a>
+<section class="consumption-document">
+  <section class="document-head">
+    <h2>{{ subject_instance.name }}</h2>
+    <ul class="object-actions subject-actions">
+      <li><a href="{% url "consumption:subject-update" subject_instance.id %}">update</a></li>
+      <li><a href="{% url "consumption:subject-delete" subject_instance.id %}">delete</a></li>
+    </ul>
+  </section>
+</section>
 {% endblock main %}
