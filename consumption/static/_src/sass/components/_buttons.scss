@@ -25,3 +25,9 @@ button,
   background: $base-color-red;
   color: $color-bright-fg;
 }
+
+.button-neutral,
+.button-cancel {
+  background: $base-color-light-grey;
+  color: $color-default-text;
+}
