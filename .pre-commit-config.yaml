@@ -49,7 +49,7 @@ repos:
         name: prettier
         language: system
         types: [text]
-        entry: make util/local/prettier
+        entry: npx prettier --ignore-unknown --write
   - repo: https://github.com/pycqa/doc8
     rev: 0.10.1
     hooks:

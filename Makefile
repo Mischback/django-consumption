@@ -228,18 +228,19 @@ util/isort :
 
 ## Run prettier on all files (see .prettierignore)
 ## @category Code Quality
-util/prettier :
+# This command uses a local installation of "prettier" as specified by the
+# repository's "package.json".
+# This is done to enable updates of the used npm packages with dependabot.
+# While this is not strictly necessary for "prettier", it is required for other
+# tools like "stylelint", that use plugins. While these plugins may be
+# specified using pre-commit's "additional_dependencies", their versions can
+# not be updated automatically.
+# Please note that the actual command to run "prettier" is provided in
+# ".pre-commit-config.yaml" only.
+# Could not find another way to make this work!
+util/prettier : | $(STAMP_NODE)
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
-
-# This does use the local installation of "prettier" in the repository's
-# environment.
-# This allows management of additional dependencies (none for prettier, several
-# for e.g. stylelint), as these dependencies are tracked and updated in the
-# repositories "package.json".
-util/local/prettier : | $(STAMP_NODE)
-	npx prettier --ignore-unknown --write
-.PHONY : util/local/prettier
 
 ## Run stylelint on all files (*.scss)
 ## @category Code Quality
