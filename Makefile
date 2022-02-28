@@ -242,9 +242,17 @@ util/prettier : | $(STAMP_NODE)
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
 
+# This command uses a local installation of "stylelint" as specified by the
+# repository's "package.json".
+# This is done to enable updates of the used npm packages with dependabot.
+# While this is not strictly necessary for "stylelint" itsself, pre-commit's
+# "autoupdate" does not work on "additional_dependencies"
+# Please note that the actual command to run "stylelint" is provided in
+# ".pre-commit-config.yaml" only.
+# Could not find another way to make this work!
 ## Run stylelint on all files (*.scss)
 ## @category Code Quality
-util/stylelint :
+util/stylelint : | $(STAMP_NODE)
 	$(MAKE) util/pre-commit pre-commit_id="stylelint" pre-commit_files="--all-files"
 .PHONY : util/stylelint
 

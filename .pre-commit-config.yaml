@@ -50,6 +50,11 @@ repos:
         language: system
         types: [text]
         entry: npx prettier --ignore-unknown --write
+      - id: stylelint
+        name: stylelint
+        language: system
+        types: ["css", "scss"]
+        entry: npx stylelint --fix
   - repo: https://github.com/pycqa/doc8
     rev: 0.10.1
     hooks:
