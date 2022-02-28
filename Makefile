@@ -226,8 +226,6 @@ util/isort :
 	$(MAKE) util/pre-commit pre-commit_id="isort" pre-commit_files="--all-files"
 .PHONY : util/isort
 
-## Run prettier on all files (see .prettierignore)
-## @category Code Quality
 # This command uses a local installation of "prettier" as specified by the
 # repository's "package.json".
 # This is done to enable updates of the used npm packages with dependabot.
@@ -238,6 +236,8 @@ util/isort :
 # Please note that the actual command to run "prettier" is provided in
 # ".pre-commit-config.yaml" only.
 # Could not find another way to make this work!
+## Run prettier on all files (see .prettierignore)
+## @category Code Quality
 util/prettier : | $(STAMP_NODE)
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/prettier
