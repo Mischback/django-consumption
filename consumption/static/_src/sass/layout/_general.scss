@@ -1,0 +1,10 @@
+/* GENERAL LAYOUT
+ *
+ * Provide general settings regarding the layout.
+ */
+
+body {
+  box-sizing: border-box;
+  background: $color_default-bg;
+  color: $color-default-text;
+}
