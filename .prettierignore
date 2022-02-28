@@ -1,0 +1,15 @@
+# ignore auto-generated stuff
+.make-stamps/
+.tox/
+node_modules/
+.coverage.*
+.coverage*
+lcov.info
+
+consumption/static/consumption/
+dist/
+docs/build/
+
+# ignore the app's templates
+# will be handled by djlint
+consumption/templates/

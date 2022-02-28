@@ -1,0 +1,4 @@
+This directory contains the app-specific stylesheet.
+
+The actual stylesheet is created from SCSS sources (see
+``consumption/static/_src/sass``) during the app's build process.

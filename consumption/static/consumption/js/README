@@ -1,0 +1,4 @@
+This directory contains the app-specific stylesheet.
+
+The actual stylesheet is created from TypeScript sources (see
+``consumption/static/_src/ts``) during the app's build process.

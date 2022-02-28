@@ -14,15 +14,34 @@
 # left untouched.
 
 # ### INTERNAL SETTINGS / CONSTANTS
-TOX_WORK_DIR := .tox
-TOX_DJANGO_ENV := $(TOX_WORK_DIR)/django
-TOX_SPHINX_ENV := $(TOX_WORK_DIR)/sphinx
-TOX_TEST_ENV := $(TOX_WORK_DIR)/testing
-TOX_UTIL_ENV := $(TOX_WORK_DIR)/util
+
+STATIC_ASSETS_DIR := consumption/static
+STATIC_ASSETS_SRC_DIR := $(STATIC_ASSETS_DIR)/_src
+STATIC_ASSETS_BUILD_DIR := $(STATIC_ASSETS_DIR)/consumption
+
+STATIC_ASSETS_BUILD_CSS := $(STATIC_ASSETS_BUILD_DIR)/css/style.css
+STATIC_ASSETS_BUILD_JS := $(STATIC_ASSETS_BUILD_DIR)/js/bundle.js
+
+STATIC_ASSETS_SRC_FILES_SASS := $(shell find $(STATIC_ASSETS_SRC_DIR)/sass -type f)
+STATIC_ASSETS_SRC_FILES_TS := $(shell find $(STATIC_ASSETS_SRC_DIR)/ts -false -o -type f)
 
 DEVELOPMENT_REQUIREMENTS := requirements/common.txt requirements/coverage.txt requirements/development.txt
 DOCUMENTATION_REQUIREMENTS := requirements/common.txt requirements/documentation.txt docs/source/conf.py
 UTIL_REQUIREMENTS := requirements/coverage.txt requirements/util.txt
+
+
+# Make's internal stamp directory
+# Stamps are used to keep track of certain build steps.
+# Should be included in .gitignore
+STAMP_DIR := .make-stamps
+
+STAMP_TOX_DJANGO := $(STAMP_DIR)/tox-django
+STAMP_TOX_SPHINX := $(STAMP_DIR)/tox-sphinx
+STAMP_TOX_TEST := $(STAMP_DIR)/tox-testing
+STAMP_TOX_UTIL := $(STAMP_DIR)/tox-util
+STAMP_NODE := $(STAMP_DIR)/node-ready
+STAMP_STATIC_ASSETS_READY := $(STAMP_DIR)/static-assets-ready
+STAMP_STATIC_CSS_READY := $(STAMP_DIR)/static-css-ready
 
 # some make settings
 .SILENT :
@@ -66,6 +85,12 @@ clean :
 .PHONY : clean
 
 
+## Build the app's static assets
+## @category Build
+build/static : $(STAMP_STATIC_ASSETS_READY)
+.PHONY : build/static
+
+
 ## Verify that the packaged app can be installed; used during CI only
 ## @category CI
 ci/test/installation :
@@ -83,7 +108,7 @@ dev/coverage : clean dev/test
 test_command ?= ""
 ## Run the test suite
 ## @category Development
-dev/test : $(TOX_TEST_ENV)
+dev/test : $(STAMP_TOX_TEST)
 	tox -q -e testing -- $(test_command)
 .PHONY : dev/test
 
@@ -98,7 +123,7 @@ dev/test/tag :
 # ### Django management commands
 
 django_command ?= "version"
-django : $(TOX_DJANGO_ENV)
+django : $(STAMP_TOX_DJANGO)
 	tox -q -e django -- $(django_command)
 .PHONY : django
 
@@ -147,16 +172,16 @@ django/migrate :
 .PHONY : django/migrate
 
 host_port ?= "0:8000"
-## "django-admin runserver"; runs Django's development server with host = "0"
+## "$ django-admin runserver"; runs Django's development server with host = "0"
 ## and port = "8000".
 ## Host and port might be specified by "make django/runserver host_port="0:4444"
 ## to run the server on port "4444".
 ## @category Django
-django/runserver : django/migrate django/clearsessions
+django/runserver : django/migrate django/clearsessions build/static
 	$(MAKE) django django_command="runserver $(host_port)"
 .PHONY : django/runserver
 
-## "django-admin shell"; run a REPL with the project's settings
+## "$ django-admin shell"; run a REPL with the project's settings
 ## @category Django
 django/shell :
 	$(MAKE) django django_command="shell"
@@ -176,6 +201,20 @@ util/bandit :
 util/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
 .PHONY : util/black
+
+# This command uses a local installation of "eslint" as specified by the
+# repository's "package.json".
+# This is done to enable updates of the used npm packages with dependabot.
+# While this is not strictly necessary for "eslint" itsself, pre-commit's
+# "autoupdate" does not work on "additional_dependencies"
+# Please note that the actual command to run "eslint" is provided in
+# ".pre-commit-config.yaml" only.
+# Could not find another way to make this work!
+## Run eslint on all files (*.js, *.ts)
+## @category Code Quality
+util/eslint : | $(STAMP_NODE)
+	$(MAKE) util/pre-commit pre-commit_id="eslint" pre-commit_files="--all-files"
+.PHONY : util/eslint
 
 ## Run djlint on all files (*.html)
 ## @category Code Quality
@@ -201,28 +240,58 @@ util/isort :
 	$(MAKE) util/pre-commit pre-commit_id="isort" pre-commit_files="--all-files"
 .PHONY : util/isort
 
+# This command uses a local installation of "prettier" as specified by the
+# repository's "package.json".
+# This is done to enable updates of the used npm packages with dependabot.
+# While this is not strictly necessary for "prettier", it is required for other
+# tools like "stylelint", that use plugins. While these plugins may be
+# specified using pre-commit's "additional_dependencies", their versions can
+# not be updated automatically.
+# Please note that the actual command to run "prettier" is provided in
+# ".pre-commit-config.yaml" only.
+# Could not find another way to make this work!
+## Run prettier on all files (see .prettierignore)
+## @category Code Quality
+util/prettier : | $(STAMP_NODE)
+	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
+.PHONY : util/prettier
+
+# This command uses a local installation of "stylelint" as specified by the
+# repository's "package.json".
+# This is done to enable updates of the used npm packages with dependabot.
+# While this is not strictly necessary for "stylelint" itsself, pre-commit's
+# "autoupdate" does not work on "additional_dependencies"
+# Please note that the actual command to run "stylelint" is provided in
+# ".pre-commit-config.yaml" only.
+# Could not find another way to make this work!
+## Run stylelint on all files (*.scss)
+## @category Code Quality
+util/stylelint : | $(STAMP_NODE)
+	$(MAKE) util/pre-commit pre-commit_id="stylelint" pre-commit_files="--all-files"
+.PHONY : util/stylelint
+
 pre-commit_id ?= ""
 pre-commit_files ?= ""
 ## Run all code quality tools as defined in .pre-commit-config.yaml
 ## @category Code Quality
-util/pre-commit : $(TOX_UTIL_ENV)
+util/pre-commit : $(STAMP_TOX_UTIL)
 	tox -q -e util -- pre-commit run $(pre-commit_files) $(pre-commit_id)
 .PHONY : util/pre-commit
 
 ## Install pre-commit hooks to be executed automatically
 ## @category Code Quality
-util/pre-commit/install : $(TOX_UTIL_ENV)
+util/pre-commit/install : $(STAMP_TOX_UTIL)
 	tox -q -e util -- pre-commit install
 .PHONY : util/pre-commit/install
 
 ## Update pre-commit hooks
 ## @category Code Quality
-util/pre-commit/update : $(TOX_UTIL_ENV)
+util/pre-commit/update : $(STAMP_TOX_UTIL)
 	tox -q -e util -- pre-commit autoupdate
 .PHONY : util/pre-commit/update
 
 flit_argument ?= "--version"
-util/flit : $(TOX_UTIL_ENV)
+util/flit : $(STAMP_TOX_UTIL) $(STAMP_STATIC_ASSETS_READY)
 	tox -q -e util -- flit $(flit_argument)
 .PHONY : util/flit
 
@@ -243,7 +312,7 @@ util/flit/publish :
 
 ## Build the documentation using "Sphinx"
 ## @category Development
-sphinx/build/html : $(TOX_SPHINX_ENV)
+sphinx/build/html : $(STAMP_TOX_SPHINX)
 	tox -q -e sphinx
 .PHONY : sphinx/build/html
 
@@ -255,24 +324,61 @@ sphinx/serve/html : sphinx/build/html
 
 ## Check documentation's external links
 ## @category Development
-sphinx/linkcheck : $(TOX_SPHINX_ENV)
+sphinx/linkcheck : $(STAMP_TOX_SPHINX)
 	tox -q -e sphinx -- make linkcheck
 .PHONY : sphinx/linkcheck
 
 
 # ### INTERNAL RECIPES
-$(TOX_DJANGO_ENV) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+
+$(STAMP_STATIC_ASSETS_READY) : $(STATIC_ASSETS_BUILD_CSS) $(STATIC_ASSETS_BUILD_JS)
+	$(create_dir)
+	echo "Building static assets..."
+	touch $@
+
+$(STATIC_ASSETS_BUILD_JS) : $(STATIC_ASSETS_SRC_FILES_TS) | $(STAMP_NODE)
+	$(create_dir)
+	npx tsc && \
+	npx browserify $(STATIC_ASSETS_DIR)/.tmp/*.js -o $@ && \
+	rm -rf $(STATIC_ASSETS_DIR)/.tmp
+
+# utility function to create required directories on the fly
+create_dir = @mkdir -p $(@D)
+
+$(STAMP_TOX_DJANGO) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+	$(create_dir)
 	tox --recreate -e django
+	touch $@
 
-$(TOX_SPHINX_ENV) : $(DOCUMENTATION_REQUIREMENTS) pyproject.toml
+$(STAMP_TOX_SPHINX) : $(DOCUMENTATION_REQUIREMENTS) pyproject.toml
+	$(create_dir)
 	tox --recreate -e sphinx
+	touch $@
 
-$(TOX_TEST_ENV) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+$(STAMP_TOX_TEST) : $(DEVELOPMENT_REQUIREMENTS) pyproject.toml
+	$(create_dir)
 	tox --recreate -e testing
+	touch $@
 
-$(TOX_UTIL_ENV) : $(UTIL_REQUIREMENTS) pyproject.toml .pre-commit-config.yaml
+$(STAMP_TOX_UTIL) : $(UTIL_REQUIREMENTS) pyproject.toml .pre-commit-config.yaml
+	$(create_dir)
 	tox --recreate -e util
+	touch $@
 
+$(STAMP_NODE) : package.json
+	$(create_dir)
+	npm install
+	touch $@
+
+# This is the generic recipe to compile SASS sources to CSS
+# Please note: This is not an optimized stylesheet! It includes source maps
+# and is not minimized!
+$(STATIC_ASSETS_BUILD_DIR)/css/%.css : $(STATIC_ASSETS_SRC_DIR)/sass/%.scss $(STATIC_ASSETS_SRC_FILES_SASS) | $(STAMP_NODE)
+	npx sass $<:$@ --style=expanded --source-map --stop-on-error
+
+
+# ### The following stuff implements the "self-documenting Makefile" function
+# ### DO NOT TOUCH!
 
 # fancy colors
 RULE_COLOR := "$$(tput setaf 6)"

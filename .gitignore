@@ -1,5 +1,11 @@
+# make's stamp directory
+.make-stamps
+
 # tox's virtual environments
 .tox
+
+# NodeJS directory
+node_modules/
 
 # while runnning the app from the tox environment, data is stored in a sqlite
 # database stored in test.sqlite3 / dev.sqlite3

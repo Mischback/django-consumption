@@ -1,0 +1,24 @@
+{
+  "include": ["./consumption/static/_src/ts/**/*"],
+  "compilerOptions": {
+    "outDir": "./consumption/static/.tmp/",
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "removeComments": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmitOnError": true,
+    "declaration": false,
+    "sourceMap": false,
+    "newLine": "lf",
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true
+  }
+}
