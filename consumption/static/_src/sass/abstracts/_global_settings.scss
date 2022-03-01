@@ -16,3 +16,8 @@ $text-content-line-height: 1.7;
 $text-content-font-size: 1rem;
 $text-content-vertical-rhythm: $text-content-line-height *
   $text-content-font-size * 0.5;
+
+div {
+  margin: 0;
+  padding: 0;
+}

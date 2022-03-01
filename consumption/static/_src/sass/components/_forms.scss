@@ -1,0 +1,28 @@
+.consumption-form {
+  .field-group {
+    margin: 0.5em 0 2em;
+
+    label,
+    .helptext,
+    .field-errors {
+      display: block;
+      margin-left: 0.25rem;
+    }
+
+    .helptext {
+      font-size: 0.8em;
+    }
+
+    input,
+    select {
+      padding: 0.25em 0.5em;
+      border: 1px solid $base-color-dark-grey;
+      font-size: 1.5em;
+    }
+  }
+
+  button,
+  .fake-button {
+    font-size: 1.25em;
+  }
+}

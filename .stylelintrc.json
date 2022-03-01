@@ -8,6 +8,7 @@
   "rules": {
     "indentation": 2,
     "selector-max-id": 1,
+    "max-nesting-depth": 3,
     "scss/at-import-no-partial-leading-underscore": null
   }
 }
