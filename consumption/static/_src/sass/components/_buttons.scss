@@ -19,15 +19,30 @@ button,
 .button-safety {
   background: $base-color-green;
   color: $color-bright-fg;
+
+  &:hover {
+    background: $base-color-yellow;
+    color: $color-default-text;
+  }
 }
 
 .button-danger {
   background: $base-color-red;
   color: $color-bright-fg;
+
+  &:hover {
+    background: $base-color-yellow;
+    color: $color-default-text;
+  }
 }
 
 .button-neutral,
 .button-cancel {
   background: $base-color-light-grey;
   color: $color-default-text;
+
+  &:hover {
+    background: $base-color-yellow;
+    color: $color-default-text;
+  }
 }
