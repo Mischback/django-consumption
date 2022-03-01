@@ -1,11 +1,11 @@
 {% extends "consumption/app_base.html" %}
 
-{% block page-title %}Record: {{ record_instance.timestamp }}{% endblock page-title %}
+{% block page-title %}Record: {{ record_instance.timestamp|date:"Y-m-d (H:i)" }}{% endblock page-title %}
 
 {% block main %}
 <section class="consumption-document">
   <section class="document-head">
-    <h2>{{ record_instance.resource.name }} - {{ record_instance.timestamp }}</h2>
+    <h2>{{ record_instance.resource.name }} - {{ record_instance.timestamp|date:"Y-m-d (H:i)" }}</h2>
     <ul class="object-actions record-actions">
       <li><a class="fake-button" href="{% url "consumption:record-update" record_instance.id %}">update</a></li>
       <li><a class="fake-button" href="{% url "consumption:record-delete" record_instance.id %}">delete</a></li>
@@ -15,7 +15,7 @@
     <p>This record is tracked for <a href="{% url "consumption:resource-detail" record_instance.resource.id %}">{{ record_instance.resource.name }}</a>.</p>
   </section>
   <section class="object-data record-data">
-    {{ record_instance.timestamp }} -
+    {{ record_instance.timestamp|date:"Y-m-d (H:i)" }} -
     {{ record_instance.reading }} {{ record_instance.resource.unit }}
   </section>
 </section>
