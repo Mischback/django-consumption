@@ -16,9 +16,12 @@
       <button type="submit" class="button-update">Update Subject</button>
       <button type="reset" class="button-cancel">Cancel</button>
     </form>
-    <ul class="object-actions resource-actions">
-      <li><a href="{% url "consumption:subject-delete" subject_instance.id %}">delete</a></li>
-    </ul>
+    <section>
+      <h5>Other Actions:</h5>
+      <ul class="object-actions resource-actions">
+        <li><a class="fake-button" href="{% url "consumption:subject-delete" subject_instance.id %}">Delete Subject</a></li>
+      </ul>
+    </section>
   </section>
 </section>
 {% endblock main %}
