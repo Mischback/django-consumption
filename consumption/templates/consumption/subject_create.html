@@ -3,14 +3,19 @@
 {% block page-title %}Subject: Create a new Subject instance{% endblock page-title %}
 
 {% block main %}
-<h2>Create a new Subject instance</h2>
+<section class="consumption-document">
+  <section class="document-head">
+    <h2>Create a new Subject instance</h2>
+  </section>
+  <section>
+    <form method="post" novalidate class="consumption-form">
+      {% csrf_token %}
 
-<form method="post" novalidate class="consumption-form">
-  {% csrf_token %}
+      {{ form }}
 
-  {{ form }}
-
-  <button type="submit" class="submit">Add Subject</button>
-  <button type="reset" class="cancel">Cancel</button>
-</form>
+      <button type="submit" class="button-create">Add Subject</button>
+      <button type="reset" class="button-cancel">Reset Changes</button>
+    </form>
+  </section>
+</section>
 {% endblock main %}

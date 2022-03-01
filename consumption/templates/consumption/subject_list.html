@@ -3,33 +3,40 @@
 {% block page-title %}Subject: List of Subject instances{% endblock page-title %}
 
 {% block main %}
-<h2>List of Subject instances</h2>
+<section class="consumption-document">
+  <section class="document-head">
+    <h2>List of Subject instances</h2>
+  </section>
+  <section>
+    <a class="fake-button button-create" href="{% url "consumption:subject-create" %}">Add Subject</a>
 
-<section>
-  <a href="{% url "consumption:subject-create" %}"><button class="consumption-action">Add Subject</button></a>
-  <table class="list_view">
-    {% if subject_list %}
-    <tr>
-      <th>Name</th>
-      <th>Actions</th>
-    </tr>
-    {% for subject in subject_list %}
-    <tr>
-      <td>
-        <a href="{{ subject.get_absolute_url }}">{{ subject.name }}</a>
-      </td>
-      <td>
-        <a href="{% url "consumption:subject-update" subject.id %}">update</a>
-        <a href="{% url "consumption:subject-delete" subject.id %}">delete</a>
-      </td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-      <td>Could not fetch Subject list.</td>
-    </tr>
-    {% endif %}
-  </table>
-  <a href="{% url "consumption:subject-create" %}"><button class="consumption-action">Add Subject</button></a>
+    <table class="object-list-table">
+      {% if subject_list %}
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      {% for subject in subject_list %}
+      <tr>
+        <td>
+          <a href="{{ subject.get_absolute_url }}">{{ subject.name }}</a>
+        </td>
+        <td>
+          <ul class="object-actions subject-actions">
+            <li><a class="fake-button" href="{% url "consumption:subject-update" subject.id %}">update</a></li>
+            <li><a class="fake-button" href="{% url "consumption:subject-delete" subject.id %}">delete</a></li>
+          </ul>
+        </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td>Could not fetch Subject list.</td>
+      </tr>
+      {% endif %}
+    </table>
+
+    <a class="fake-button button-create" href="{% url "consumption:subject-create" %}">Add Subject</a>
+  </section>
 </section>
 {% endblock main %}

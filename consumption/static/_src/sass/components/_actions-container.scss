@@ -1,0 +1,19 @@
+.object-actions {
+  margin: 0;
+  padding: 0;
+}
+
+.object-actions > li {
+  display: inline-block;
+  list-style: none;
+}
+
+.object-actions > li > .fake-button {
+  background: $base-color-bright-blue;
+  color: $color-default-text;
+
+  &:hover {
+    background: $base-color-yellow;
+    color: $color-default-text;
+  }
+}

@@ -1,0 +1,66 @@
+/* GENERAL LAYOUT
+ *
+ * Provide general settings regarding the layout.
+ */
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  box-sizing: border-box;
+  background: $color-default-bg;
+  color: $color-default-text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: $text-content-vertical-rhythm * 3;
+  margin-bottom: $text-content-vertical-rhythm;
+}
+
+h1 {
+  margin-bottom: $text-content-vertical-rhythm * 1.5;
+  font-size: 2.25em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.7em;
+  font-weight: bold;
+}
+
+h3 {
+  margin-top: $text-content-vertical-rhythm * 2;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+h4 {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+h5 {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+h6 {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+p {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: $text-content-font-size;
+  line-height: $text-content-line-height;
+}
