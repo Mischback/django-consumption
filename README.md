@@ -1,6 +1,6 @@
 # django-consumption
 
-[![GitHub branch checks state](https://img.shields.io/github/workflow/status/mischback/django-consumption/CI%20default%20branch?style=flat&logo=github)](https://github.com/Mischback/django-consumption/actions/workflows/ci-default.yml?query=branch%3Adevelopment)
+[![GitHub branch checks state](https://img.shields.io/github/actions/workflow/status/mischback/django-consumption/ci-default.yml?branch=development&style=flat&logo=github)](https://github.com/Mischback/django-consumption/actions/workflows/ci-default.yml?query=branch%3Adevelopment)
 [![Coverage Status](https://img.shields.io/coveralls/github/Mischback/django-consumption)](https://coveralls.io/github/Mischback/django-consumption)
 [![GitHub License](https://img.shields.io/github/license/mischback/imp?style=flat)](https://github.com/Mischback/django-consumption/blob/development/LICENSE)
 
