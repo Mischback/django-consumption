@@ -6,7 +6,7 @@
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "prettier": "^2.8.4",
-    "sass": "^1.57.1",
+    "sass": "^1.58.1",
     "stylelint": "^14.16.1",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-property-sort-order-smacss": "^9.0.0",
