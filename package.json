@@ -3,7 +3,7 @@
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "browserify": "^17.0.0",
-    "eslint": "^8.43.0",
+    "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
     "sass": "^1.63.6",
